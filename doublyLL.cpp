@@ -9,7 +9,7 @@ int main()
 {
 
 	short selection;
-	int dataInput;
+	int	dataInput;
 	node* head = nullptr;
 
 	while (true)
@@ -18,10 +18,10 @@ int main()
 		cout << "Enter your choice: ";
 		cin >> selection;
 
-		if (selection == 9)
+		if (selection == EXIT)
 			exit(0);
 
-		if (selection != 4)
+		if (selection != POP)
 		{
 			cout << "Enter data: ";
 			cin >> dataInput;
@@ -29,24 +29,23 @@ int main()
 
 		switch (selection)
 		{
-		case(1):
+		case(ADD):
 			//add_node(index);
 			break;
-		case(2):
+		case(PUSH):
 			push_node(&head, dataInput);
 			break;
-		case(3):
+		case(REMOVE):
 			//remove_node(index);
 			break;
-		case(4):
-			pop_node(head);
+		case(POP):
+			pop_node(&head);
 			break;
-		case(5):
+		case(SEARCH):
 			//search_node()
 			break;
 		default:
 			cout << "Bad Input" << endl;
-
 		}
 		display_node(head);
 	}

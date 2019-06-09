@@ -3,6 +3,16 @@
 
 using namespace std;
 
+enum MODES
+{
+	ADD = 1,
+	PUSH,
+	REMOVE,
+	POP,
+	SEARCH,
+	EXIT = 9,
+};
+
 struct node
 {
 	int data;
@@ -25,21 +35,21 @@ void display_node(node* head)
 	// no nodes to display
 	if(head == nullptr)
 	{
-		cout << "Nothing to Display" << endl;
+		cout << "Nothing to Display\n" << endl;
 		return;
 	}
 	// one node only
 
 	if (head->next == nullptr)
 	{
-		cout << "node: " << head << " data: " << head->data << endl;
+		cout << "node: " << head << " data: " << head->data << endl << endl;
 		return;
 	}
 
 	// more than one node
 	while (head != nullptr)
 	{
-		cout << "node: " << head << " data: " << head->data << " Previous: " << head->previous <<" Next: "<< head->next<<endl;
+		cout << "node: " << head << " data: " << head->data << " Previous: " << head->previous << " Next: " << head->next << endl << endl;
 		head = head->next;
 	}
 }
@@ -78,7 +88,23 @@ void push_node(node** head, int data)
 	return;
 }
 
-void pop_node(node* n)
+void pop_node(node** head)
 {
-
+	// no node situation
+	if (*head == nullptr)
+	{
+		cout << "nothing to pop" << endl;
+		return;
+	}
+	// 1 node
+		
+	if ((*head)->next == nullptr)
+	{
+		delete *head;
+		return;
+	}
+	// more than 1 node
+	node* temp = *head;
+	*head = (*head)->next;
+	delete temp;
 }
