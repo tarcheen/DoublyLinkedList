@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
@@ -86,6 +87,46 @@ void push_node(node** head, int data)
 	temp->next->data = data;
 	temp->next->previous = temp;
 	return;
+}
+
+
+void add_node(node** head, int index, int data)
+{
+	// 0 node situation
+	if (*head == nullptr)
+	{
+		*head = new node;
+		(*head)->data = data;
+		(*head)->next = nullptr;
+		(*head)->previous = nullptr;
+		return;
+	}
+	// 1 node situation
+	if ((*head)->next == nullptr)
+	{
+		(*head)->next = new node;
+		(*head)->next->next = nullptr;
+		(*head)->next->data = data;
+		(*head)->next->previous = *head;
+		return;
+	}
+	// more than one node
+	node* temp1 = *head;
+	node* temp2 = (*head)->next;
+
+	while (index - 1 > 0 && temp2 != nullptr)
+	{
+		temp1 = temp2;
+		temp2 = temp2->next;
+	}
+	// we are at the correct location now
+	temp1->next = new node;
+	temp1->next->data = data;
+	temp1->next->next = temp2;
+	temp1->next->previous = temp1;
+
+	return;
+
 }
 
 void pop_node(node** head)
