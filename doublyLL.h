@@ -39,57 +39,47 @@ void display_node(node* head)
 		cout << "Nothing to Display\n" << endl;
 		return;
 	}
-	// one node only
+	// one node or more
 
-	if (head->next == nullptr)
+	node* tmp = head;
+	while (tmp != nullptr)
 	{
-		cout << "node: " << head << " data: " << head->data << endl << endl;
-		return;
-	}
-
-	// more than one node
-	while (head != nullptr)
-	{
-		cout << "node: " << head << " data: " << head->data << " Previous: " << head->previous << " Next: " << head->next << endl << endl;
-		head = head->next;
+		cout << "node: " << tmp << " data: " << tmp->data << " Previous: " << tmp->previous << " Next: " << tmp->next << endl << endl;
+		tmp = tmp->next;
 	}
 }
 
-void push_node(node** head, int data)
+node* push_node(node* head, int data)
 {
 	// 0 node situation
-	if (*head == nullptr)			
+	if (head == nullptr)			
 	{
-		*head = new node;
-		(*head)->data = data;
-		(*head)->next = nullptr;
-		(*head)->previous = nullptr;
-		return;
+		head = new node;
+		head->data = data;
+		head->next = nullptr;
+		head->previous = nullptr;
+		return head;
 	}
-	// 1 node situation
-	if ((*head)->next == nullptr)
+	
+	// 1 or more than 1 node situation
+	node* tmp = head;
+	while (tmp->next != nullptr)
 	{
-		(*head)->next = new node;
-		(*head)->next->next = nullptr;
-		(*head)->next->data = data;
-		(*head)->next->previous = *head;
-		return;
+		tmp = tmp->next;		// go to the next node
 	}
-	// more than 1 node situation
-	node* temp = *head;
-	while (temp->next != nullptr)
-	{
-		temp = temp->next;		// go to the next node
-	}
+
 	// now we are at the end of the list
-	temp->next = new node;
-	temp->next->next = nullptr;
-	temp->next->data = data;
-	temp->next->previous = temp;
-	return;
+	node* tmp2 = tmp;
+	tmp = new node;
+	tmp->data = data;
+	tmp->next = nullptr;
+	tmp->previous = tmp2;
+	tmp2->next = tmp;
+
+	return head;
 }
 
-
+/*
 void add_node(node** head, int index, int data)
 {
 	// 0 node situation
@@ -101,32 +91,33 @@ void add_node(node** head, int index, int data)
 		(*head)->previous = nullptr;
 		return;
 	}
-	// 1 node situation
-	if ((*head)->next == nullptr)
-	{
-		(*head)->next = new node;
-		(*head)->next->next = nullptr;
-		(*head)->next->data = data;
-		(*head)->next->previous = *head;
-		return;
-	}
+	
 	// more than one node
-	node* temp1 = *head;
-	node* temp2 = (*head)->next;
+	//node* temp1 = *head;
+	int traverse = 0;
 
-	while (index - 1 > 0 && temp2 != nullptr)
+	while (*head != nullptr)
 	{
-		temp1 = temp2;
-		temp2 = temp2->next;
+
+		if (index == traverse)
+		{
+			node* temp2 = *head;
+			node* temp1 = (*head)->previous;
+			*head = new node;
+			(*head)->data = data;
+			(*head)->next = temp2;
+			(*head)->previous = temp1;
+			(*head)->next->previous = (*head);
+			(*head)->previous->next = (*head);
+			return;
+		}
+
+		*head = (*head)->next;
+		++traverse;
 	}
-	// we are at the correct location now
-	temp1->next = new node;
-	temp1->next->data = data;
-	temp1->next->next = temp2;
-	temp1->next->previous = temp1;
-
+	// index is out of bound, just push the item at the end of the list
+	push_node(head, data);
 	return;
-
 }
 
 void pop_node(node** head)
@@ -149,3 +140,41 @@ void pop_node(node** head)
 	*head = (*head)->next;
 	delete temp;
 }
+
+void remove_node(node** head, int data)
+{
+	// no node situation
+	if (*head == nullptr)
+	{
+		cout << "Nothing to Delete" << endl;
+		return;
+	}
+	// single node situation
+	if ((*head)->next == nullptr)
+	{
+		if((*head)->data == data)
+			delete *head;
+		return;
+	}
+	// more than one node situation
+	node* temp1 = *head;
+	node* temp2 = (*head)->next;
+
+	while (temp2 != nullptr)
+	{
+		// if data found
+		if (temp2->data == data)
+		{
+			// remove node and return
+			temp1 = temp2->next;
+			delete temp2;
+			return;
+		}
+		temp1 = temp2;
+		temp2 = temp2->next;
+	}
+	// no match found, return
+	return;
+
+}
+*/

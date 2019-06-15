@@ -8,9 +8,9 @@ Implementing Doubly Linked List
 int main()
 {
 
-	short selection;
-	int	dataInput;
-	int index;
+	short selection;	// menu select
+	int	dataInput;		// user data
+	int index;			// in case of adding node/data
 	node* head = nullptr;
 
 	while (true)
@@ -26,18 +26,18 @@ int main()
 			cin >> dataInput;
 			cout << "Enter position index: ";
 			cin >> index;
-			add_node(&head,index,dataInput);
+			//add_node(&head,index,dataInput);
 			break;
 		case(PUSH):
 			cout << "Enter data: ";
 			cin >> dataInput;
-			push_node(&head, dataInput);
+			head = push_node(head, dataInput);
 			break;
 		case(REMOVE):
-			//remove_node(index);
+			//remove_node(&head, dataInput);
 			break;
 		case(POP):
-			pop_node(&head);
+			//pop_node(&head);
 			break;
 		case(SEARCH):
 			//search_node()
