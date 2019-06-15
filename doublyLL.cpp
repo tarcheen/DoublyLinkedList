@@ -26,7 +26,7 @@ int main()
 			cin >> dataInput;
 			cout << "Enter position index: ";
 			cin >> index;
-			//add_node(&head,index,dataInput);
+			head = add_node(head,index,dataInput);
 			break;
 		case(PUSH):
 			cout << "Enter data: ";

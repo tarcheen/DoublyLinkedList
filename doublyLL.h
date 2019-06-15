@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include <windows.h>
+#include "ConsoleColor.h"
 
 using namespace std;
 
@@ -44,7 +44,8 @@ void display_node(node* head)
 	node* tmp = head;
 	while (tmp != nullptr)
 	{
-		cout << "node: " << tmp << " data: " << tmp->data << " Previous: " << tmp->previous << " Next: " << tmp->next << endl << endl;
+		cout << red << "node: " << tmp << blue <<" data: " << tmp->data << yellow << " Previous: " << tmp->previous <<
+			green << " Next: " << tmp->next << endl << endl << white;
 		tmp = tmp->next;
 	}
 }
@@ -103,48 +104,52 @@ node* pop_node(node* head)
 
 
 
-/*
-void add_node(node** head, int index, int data)
+
+node* add_node(node* head, const int index, const int data)
 {
 	// 0 node situation
-	if (*head == nullptr)
+	if (head == nullptr)
 	{
-		*head = new node;
-		(*head)->data = data;
-		(*head)->next = nullptr;
-		(*head)->previous = nullptr;
-		return;
+		head = push_node(head, data);
+		return head;
 	}
-	
-	// more than one node
-	//node* temp1 = *head;
-	int traverse = 0;
 
-	while (*head != nullptr)
+	// index 0 situation
+	if (index == 0)
 	{
-
-		if (index == traverse)
+		node* temp = head;
+		head = new node;
+		head->data = data;
+		head->next = temp;
+		head->previous = nullptr;
+		head->next->previous = head;
+		return head;
+	}
+	// search for index
+	uint16_t count = 0;
+	node* tmp = head;
+	while (tmp != nullptr)
+	{
+		if (count == index)
 		{
-			node* temp2 = *head;
-			node* temp1 = (*head)->previous;
-			*head = new node;
-			(*head)->data = data;
-			(*head)->next = temp2;
-			(*head)->previous = temp1;
-			(*head)->next->previous = (*head);
-			(*head)->previous->next = (*head);
-			return;
+			node* tempRewind = tmp->previous;
+			node* tempForward = tmp;
+			tmp = new node;
+			tmp->data = data;
+			tmp->previous = tempRewind;
+			tmp->next = tempForward;
+			tmp->previous->next = tmp;
+			tempForward->previous = tmp;
+			return head;
 		}
-
-		*head = (*head)->next;
-		++traverse;
+		++count;
+		tmp = tmp->next;
 	}
-	// index is out of bound, just push the item at the end of the list
-	push_node(head, data);
-	return;
+	// forced to add to the end the list
+	head = push_node(head, data);
+	return head;
 }
-
-
+/*
 void remove_node(node** head, int data)
 {
 	// no node situation
