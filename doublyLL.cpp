@@ -37,7 +37,7 @@ int main()
 			//remove_node(&head, dataInput);
 			break;
 		case(POP):
-			//pop_node(&head);
+			head = pop_node(head);
 			break;
 		case(SEARCH):
 			//search_node()

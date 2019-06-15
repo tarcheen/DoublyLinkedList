@@ -79,6 +79,30 @@ node* push_node(node* head, int data)
 	return head;
 }
 
+node* pop_node(node* head)
+{
+	// no node situation
+	if (head == nullptr)
+	{
+		cout << "nothing to pop" << endl;
+		return nullptr;
+	}
+
+	// 1 node situation
+	if (head->next == nullptr)
+	{
+		delete head;
+		return nullptr;
+	}
+	// more than 1 node
+	node* temp = head;
+	head = head->next;
+	delete temp;
+	return head;
+}
+
+
+
 /*
 void add_node(node** head, int index, int data)
 {
@@ -120,26 +144,6 @@ void add_node(node** head, int index, int data)
 	return;
 }
 
-void pop_node(node** head)
-{
-	// no node situation
-	if (*head == nullptr)
-	{
-		cout << "nothing to pop" << endl;
-		return;
-	}
-	// 1 node
-		
-	if ((*head)->next == nullptr)
-	{
-		delete *head;
-		return;
-	}
-	// more than 1 node
-	node* temp = *head;
-	*head = (*head)->next;
-	delete temp;
-}
 
 void remove_node(node** head, int data)
 {
