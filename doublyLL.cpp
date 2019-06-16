@@ -8,7 +8,7 @@ Implementing Doubly Linked List
 int main()
 {
 
-	short selection;	// menu select
+	int selection;	// menu select
 	int	dataInput;		// user data
 	int index;			// in case of adding node/data
 	node* head = nullptr;
@@ -18,6 +18,15 @@ int main()
 		populate_menu();
 		cout << "Enter your choice: ";
 		cin >> selection;
+
+		while (cin.fail())
+		{
+			cout << "not a number" << endl;
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> selection;
+		}
+		
 
 		switch (selection)
 		{
@@ -42,12 +51,11 @@ int main()
 			head = pop_node(head);
 			break;
 		case(SEARCH):
-		{
 			cin >> dataInput;
-			int index = search_node(head, dataInput);
-			cout << purple << dataInput << " is located in index: " << index << endl << endl;
+			index = search_node(head, dataInput);
+			if(index > -1)
+				cout << purple << dataInput << " is located in index: " << index << white << endl << endl;
 			break;
-		}
 		case(EXIT):
 			exit(0);
 			break;
