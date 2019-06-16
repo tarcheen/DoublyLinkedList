@@ -209,3 +209,20 @@ node* remove_node(node* head, int data)
 	// no match found, no change
 	return head;
 }
+
+int search_node(node* head, int data)
+{
+	node* tmp = head;
+	uint8_t index = 0;
+	while (tmp != nullptr)
+	{
+		if (tmp->data == data)
+		{
+			return index;
+		}
+		tmp = tmp->next;
+		index++;
+	}
+	cout << "Not Found" << endl;
+	return -1;
+}

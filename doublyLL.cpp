@@ -42,8 +42,12 @@ int main()
 			head = pop_node(head);
 			break;
 		case(SEARCH):
-			//search_node()
+		{
+			cin >> dataInput;
+			int index = search_node(head, dataInput);
+			cout << purple << dataInput << " is located in index: " << index << endl << endl;
 			break;
+		}
 		case(EXIT):
 			exit(0);
 			break;
