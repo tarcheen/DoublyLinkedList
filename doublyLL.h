@@ -149,41 +149,63 @@ node* add_node(node* head, const int index, const int data)
 	head = push_node(head, data);
 	return head;
 }
-/*
-void remove_node(node** head, int data)
+
+// remove node depending on give data
+node* remove_node(node* head, int data)
 {
 	// no node situation
-	if (*head == nullptr)
+	if (head == nullptr)
 	{
 		cout << "Nothing to Delete" << endl;
-		return;
+		return nullptr;
 	}
 	// single node situation
-	if ((*head)->next == nullptr)
+	if (head->next == nullptr)
 	{
-		if((*head)->data == data)
-			delete *head;
-		return;
-	}
-	// more than one node situation
-	node* temp1 = *head;
-	node* temp2 = (*head)->next;
-
-	while (temp2 != nullptr)
-	{
-		// if data found
-		if (temp2->data == data)
+		// the single node is the target, blank LLL return nullptr
+		if (head->data == data)
 		{
-			// remove node and return
-			temp1 = temp2->next;
-			delete temp2;
-			return;
+			delete head;
+			return nullptr;
 		}
-		temp1 = temp2;
-		temp2 = temp2->next;
+		// no data match, nothing to change
+		return head;
 	}
-	// no match found, return
-	return;
 
+	// more than one node situation
+	node* tmp = head;
+	
+	while (tmp != nullptr)
+	{
+		if (tmp->data == data)
+		{
+			// last node situation
+			if (tmp->next == nullptr)
+			{
+				tmp->previous->next = nullptr;
+				delete tmp;
+				return head;
+			}
+			else if (tmp->previous == nullptr)
+			{
+				// update head since we are deleting the first element
+				head = head->next;
+				head->previous = nullptr;
+				delete tmp;
+				return head;
+			}
+			else
+			{
+				tmp->previous->next = tmp->next;
+				tmp->next->previous = tmp->previous;
+				delete tmp;
+				return head;
+			}
+		}
+
+		tmp = tmp->next;
+	}
+
+	// no match found, no change
+	return head;
 }
-*/

@@ -34,7 +34,9 @@ int main()
 			head = push_node(head, dataInput);
 			break;
 		case(REMOVE):
-			//remove_node(&head, dataInput);
+			cout << "Enter data: ";
+			cin >> dataInput;
+			head = remove_node(head, dataInput);
 			break;
 		case(POP):
 			head = pop_node(head);
